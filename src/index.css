@@ -3,3 +3,40 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.journalEntryForm {
+  margin: 25px;
+}
+
+.journalEntry {
+  margin: 25px 0px;
+  font-size:36px;
+  border-radius: 15px;
+}
+
+.submitButton {
+  -webkit-appearance: none;
+  height: 60px;
+  width: 600px;
+  background-color: #1b6f1b;
+  color:#fff;
+  font-weight:bold;
+  border: solid #666 1px;
+  font-size: 36px;
+  border-radius: 15px;
+}
+
+.failedSync {
+  color: #fff;
+  background-color: #842020;
+}
+
+.pendingSync {
+  color: #fff;
+  background-color: #e57300;
+}
+
+.finishedSync {
+  color: #fff;
+  background-color: #1b6f1b;
+}

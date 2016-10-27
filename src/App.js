@@ -1,21 +1,43 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import * as EntryActions from './actions'
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import JournalEntryForm from './JournalEntryForm';
+import JournalEntryList from './JournalEntryList';
 
 class App extends Component {
   render() {
-    return (
+      const { entries, actions, syncState } = this.props
+
+      return (
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>Welcome to Better Journaling</h2>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <JournalEntryForm addJournalEntry={actions.addJournalEntry}/>
+        <JournalEntryList entries={entries} />
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        entries: state,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(EntryActions, dispatch)
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App)
+
