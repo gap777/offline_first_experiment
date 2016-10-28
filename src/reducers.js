@@ -1,5 +1,5 @@
 
-export function simpleReducer(state=[], action) {
+export function entries(state=[], action) {
 
     switch (action.type) {
         case 'ADD_ENTRY':
@@ -11,6 +11,19 @@ export function simpleReducer(state=[], action) {
                 },
                 ...state
             ]
+
+        case 'INSERT_ENTRY':
+            return [
+                action.entry,
+                ...state
+            ]
+
+        case 'UPDATE_ENTRY':
+            return state.map(entry =>
+                entry._id === action.entry._id ?
+                    action.entry :
+                    entry
+            )
 
         default:
             return state;

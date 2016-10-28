@@ -3,7 +3,7 @@ import React from 'react'
 class JournalEntry extends React.Component {
     render() {
         return(
-            <p>{this.props.entry.text}</p>
+            <div>{this.props.entry.text}</div>
         )
     }
 }

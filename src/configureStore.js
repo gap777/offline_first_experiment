@@ -1,8 +1,9 @@
 import PouchMiddleware from 'pouch-redux-middleware'
 import { createStore, applyMiddleware } from 'redux'
-import {simpleReducer} from './reducers'
+import {entries} from './reducers'
 import PouchDB from 'pouchdb'
 import PouchSync from 'pouch-websocket-sync'
+import { combineReducers } from 'redux'
 
 // const syncEvents = ['change', 'paused', 'active', 'denied', 'complete', 'error'];
 // const clientEvents = ['connect', 'disconnect', 'reconnect'];
@@ -16,6 +17,7 @@ import PouchSync from 'pouch-websocket-sync'
 
 export default function configureStore() {
 
+    PouchDB.debug.disable('*');
     const db = new PouchDB('entries');
 
     const syncClient = PouchSync.createClient()
@@ -43,14 +45,18 @@ export default function configureStore() {
         db,
         actions: {
             remove: doc => store.dispatch({type: 'DELETE_ENTRY', id: doc._id}),
-            insert: doc => store.dispatch({type: 'ADD_ENTRY', text: doc}),
-            update: doc => store.dispatch({type: 'UPDATE_ENTRY', text: doc}),
+            insert: doc => store.dispatch({type: 'INSERT_ENTRY', entry: doc}),
+            update: doc => store.dispatch({type: 'UPDATE_ENTRY', entry: doc}),
         }
     })
 
-    var initialState = [];
+    var initialState = {entries:[]};
+    var combinedReducers = combineReducers({
+        entries
+    })
+
     store = createStore(
-        simpleReducer,
+        combinedReducers,
         initialState,
         applyMiddleware(pouchMiddleware)
     )
