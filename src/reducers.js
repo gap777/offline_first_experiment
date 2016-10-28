@@ -11,10 +11,10 @@ export function simpleReducer(state=[], action) {
                 },
                 ...state
             ]
-            break;
 
+        default:
+            return state;
     }
-    return state;
 }
 
 function id() {
